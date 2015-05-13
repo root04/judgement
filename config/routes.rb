@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
   devise_for :users
   get 'home/index'
-
   get 'home/show'
+  root 'home#index'
 
-    root to: "home#index"
+  resources :user, only: [:edit, :update]
 end
