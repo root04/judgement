@@ -1,0 +1,38 @@
+%h1 Projects#show
+- if flash[:message]
+  .alert.alert-dismissable.alert-success
+    = flash[:message]
+- if flash[:error]
+  .alert.alert-dismissable.alert-danger
+    = flash[:error]
+
+.name= @project.name
+
+- if current_user.configurable?(@organization)
+  .member_add_form
+    %p メンバー追加
+    = form_tag organization_project_members_path(@organization, @project) do
+      .form-group
+        = label_tag :email
+        = email_field_tag :email, flash[:email], class: 'new_member_email'
+        = submit_tag '追加', class: 'btn btn-default'
+
+%ul.list-group
+  - @project.users.each do |member|
+    %li.member.list-group-item
+      .list_member
+        .list_member_name.pull-left
+          = member.name
+        - if current_user.configurable?(@project) && current_user != member
+          .remove_member_btn_wrapper.pull-left
+            = form_tag organization_project_member_path(@organization, @project, member), class: 'member_remove_form', method: :delete do
+              = submit_tag '削除', class: 'remove_member_btn btn btn-default btn-sm', data: { confirm: '本当に削除しますか？' }
+          - if member.configurable?(@project)
+            .revoke_admin_btn_wrapper.pull-left
+              = form_tag revoke_organization_project_member_path(@organization, @project, member), class: 'member_admin_form', method: :patch do
+                = submit_tag '管理者剥奪', class: 'revoke_admin_btn btn btn-default btn-sm', data: { confirm: '管理者権限を剥奪しますか？' }
+          - else
+            .grant_admin_btn_wrapper.pull-left
+              = form_tag organization_project_member_path(@organization, @project, member), class: 'member_admin_form', method: :patch do
+                = submit_tag '管理者付与', class: 'grant_admin_btn btn btn-default btn-sm', data: { confirm: '管理者権限を付与しますか？' }
+

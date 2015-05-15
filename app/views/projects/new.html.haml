@@ -1,0 +1,10 @@
+%h1 Projects#new
+- if @errors
+  - @errors.full_messages.each do |message|
+    .errors= message
+
+= form_for [@organization, @project] do |f|
+  = f.label :name
+  = f.text_field :name
+
+  = f.submit '作成'

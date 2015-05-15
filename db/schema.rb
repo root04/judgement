@@ -11,7 +11,46 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150513101123) do
+ActiveRecord::Schema.define(version: 20150515073238) do
+
+  create_table "organizations", force: :cascade do |t|
+    t.string   "name",        limit: 255, null: false
+    t.text     "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.datetime "deleted_at"
+  end
+
+  create_table "projects", force: :cascade do |t|
+    t.string   "name",            null: false
+    t.integer  "organization_id", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "projects", ["organization_id"], name: "index_projects_on_organization_id"
+
+  create_table "user_organizations", force: :cascade do |t|
+    t.integer  "user_id",                         null: false
+    t.integer  "organization_id",                 null: false
+    t.boolean  "admin",           default: false, null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "user_organizations", ["organization_id", "user_id"], name: "index_user_organizations_on_organization_id_and_user_id"
+  add_index "user_organizations", ["user_id", "organization_id"], name: "index_user_organizations_on_user_id_and_organization_id", unique: true
+
+  create_table "user_projects", force: :cascade do |t|
+    t.integer  "user_id",                    null: false
+    t.integer  "project_id",                 null: false
+    t.boolean  "admin",      default: false, null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "user_projects", ["project_id", "user_id"], name: "index_user_projects_on_project_id_and_user_id"
+  add_index "user_projects", ["user_id", "project_id"], name: "index_user_projects_on_user_id_and_project_id", unique: true
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
