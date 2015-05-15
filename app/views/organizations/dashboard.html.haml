@@ -1,0 +1,42 @@
+%h2.organization_name= @organization.name
+- if flash[:message]
+  .alert.alert-dismissable.alert-success
+    = flash[:message]
+- if flash[:error]
+  .alert.alert-dismissable.alert-danger
+    = flash[:error]
+
+- if current_user.configurable?(@organization)
+  .member_add_form
+    %p メンバー追加
+    = form_tag organization_members_path(@organization) do
+      .form-group
+        = label_tag :email
+        = email_field_tag :email, flash[:email], class: 'new_member_email'
+        = submit_tag '追加', class: 'btn btn-default'
+  .list_project
+    %p 組織のプロジェクト
+    %ul
+      != list_of @organization.projects do |project|
+        = link_to project.name, organization_project_path(project, organization_id: @organization)
+  .new_project
+    %p= link_to 'プロジェクト新規作成', new_organization_project_path(@organization)
+
+%ul.list-group
+  - @organization.users.each do |member|
+    %li.member.list-group-item
+      .list_member
+        .list_member_name.pull-left
+          = member.name
+        - if current_user.configurable?(@organization) && current_user != member
+          .remove_member_btn_wrapper.pull-left
+            = form_tag organization_member_path(@organization, member), class: 'member_remove_form', method: :delete do
+              = submit_tag '削除', class: 'remove_member_btn btn btn-default btn-sm', data: { confirm: '本当に削除しますか？' }
+          - if member.configurable?(@organization)
+            .revoke_admin_btn_wrapper.pull-left
+              = form_tag revoke_organization_member_path(@organization, member), class: 'member_admin_form', method: :patch do
+                = submit_tag '管理者剥奪', class: 'revoke_admin_btn btn btn-default btn-sm', data: { confirm: '管理者権限を剥奪しますか？' }
+          - else
+            .grant_admin_btn_wrapper.pull-left
+              = form_tag organization_member_path(@organization, member), class: 'member_admin_form', method: :patch do
+                = submit_tag '管理者付与', class: 'grant_admin_btn btn btn-default btn-sm', data: { confirm: '管理者権限を付与しますか？' }

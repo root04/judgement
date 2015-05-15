@@ -1,0 +1,23 @@
+%h3 検索
+= form_tag search_organizations_path, method: :get do
+  = text_field_tag :keyword, params[:keyword], id: 'keyword_form'
+  %div
+    = check_box_tag :c1
+    check
+    = check_box_tag :c2
+    check2
+    = check_box_tag :c3
+    check3
+  = submit_tag "Search"
+
+%hr
+- if @organizations.empty?
+  %p.organizations_count 検索結果  0件
+  %p.organizations 該当する項目はありません。
+- else
+  %p.organizations_count 検索結果  #{@organizations.total_count}件
+  .organizations
+    %ul
+      - @organizations.each do |organization|
+        %li.organization= link_to organization.name, organization_path(organization)
+    = paginate @organizations

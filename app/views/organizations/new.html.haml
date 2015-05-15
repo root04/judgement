@@ -1,0 +1,11 @@
+%h3 新規組織登録
+- if @errors
+  %ul
+    - @errors.each do |error|
+      %li.error= error
+
+= form_for @organization do |f|
+  .form-group
+    = f.label :name
+    = f.text_field :name, placeholder: '組織名', class: 'form-control'
+  = f.submit '作成', class: 'btn btn-default'

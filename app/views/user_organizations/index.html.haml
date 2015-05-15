@@ -1,0 +1,7 @@
+%h3 所属中の組織
+.organizations
+  %ul
+    - @organizations.each do |organization|
+      %li.organization= link_to organization.name, dashboard_organization_path(organization)
+
+= link_to '新規作成', new_organization_path
