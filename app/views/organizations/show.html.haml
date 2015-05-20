@@ -16,22 +16,3 @@
   .dashboard
     = link_to "Dashboard", dashboard_organization_path(@organization)
 
-- OrderSet.unpublished.owned_by(current_user).each do |order_set|
-  .alert.alert-info
-    = link_to order_set_path(order_set, outsourcee_id: @organization.id) do
-      #{order_set.title} を依頼する
-
-- unless current_user.organizations.empty?
-  = form_tag contact_organization_path, method: 'post' do |f|
-    %li.organization Contact to Administrator
-    .form-group
-      = label_tag 'Subject'
-      = text_field_tag :subject, nil, placeholder: 'はじめまして', class: 'form-control', readonly: true
-    .organizations
-      = label_tag '自分が所属しているどの組織のURLを送るか選んでください'
-      - @organizations.each do |organization|
-        %li.organization
-          = link_to organization.name, dashboard_organization_path(organization)
-          = radio_button_tag 'organization_id', organization.id
-      = render file: 'organization_contact_mailer/contact_mail.html'
-      = submit_tag '送信', class: 'btn btn-default', data: { confirm: "本当に送信してよろしいですか？" }

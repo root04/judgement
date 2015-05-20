@@ -34,7 +34,7 @@ class OrganizationMembersController < ApplicationController
   def assign_configurable_organization
     @organization = current_user.organizations.find(params[:organization_id])
     unless current_user.configurable?(@organization)
-      raise Cravitee::Forbidden
+      raise Oniwa::Forbidden
     end
   end
 
@@ -50,7 +50,7 @@ class OrganizationMembersController < ApplicationController
   def assign_target_user
     @target_user = @organization.users.find(params[:id])
     if current_user == @target_user
-      raise Cravitee::BadRequest
+      raise Oniwa::BadRequest
     end
   end
 end

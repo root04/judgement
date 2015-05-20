@@ -1,6 +1,12 @@
-require 'rails_helper'
+require 'spec_helper'
 
 RSpec.describe HomeController, :type => :controller do
+
+  let(:user) { create :user }
+
+  before do
+    sign_in user
+  end
 
   describe "GET index" do
     it "returns http success" do

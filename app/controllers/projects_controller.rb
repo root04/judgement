@@ -9,7 +9,7 @@ class ProjectsController < ApplicationController
     @project = @organization.projects.find(params[:id])
 
     unless current_user.member_of?(@project)
-      raise Cravitee::Forbidden
+      raise Oniwa::Forbidden
     end
   end
 

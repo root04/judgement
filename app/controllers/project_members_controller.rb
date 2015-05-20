@@ -36,14 +36,14 @@ class ProjectMembersController < ApplicationController
   def assign_organization
     @organization = @project.organization
     unless @organization.id == params[:organization_id].to_i
-      raise Cravitee::Forbidden
+      raise Oniwa::Forbidden
     end
   end
 
   def assign_configurable_project
     @project = current_user.projects.find(params[:project_id])
     unless current_user.configurable?(@project)
-      raise Cravitee::Forbidden
+      raise Oniwa::Forbidden
     end
   end
 
@@ -59,7 +59,7 @@ class ProjectMembersController < ApplicationController
   def assign_target_user
     @target_user = @project.users.find(params[:id])
     if current_user == @target_user
-      raise Cravitee::BadRequest
+      raise Oniwa::BadRequest
     end
   end
 end

@@ -1,5 +1,5 @@
 require 'spec_helper'
 
-RSpec.describe "home/show.html.haml", :type => :view do
+describe Organization do
   pending "add some examples to (or delete) #{__FILE__}"
 end

@@ -25,7 +25,7 @@ class OrganizationsController < ApplicationController
 
   def dashboard
     @organization = current_user.organizations.no(params[:id]).first
-    raise Cravitee::Forbidden unless @organization
+    raise Oniwa::Forbidden unless @organization
   end
 
   def contact

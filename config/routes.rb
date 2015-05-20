@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   devise_for :users
   get 'home/index'
   get 'home/show'
-  root 'home#index'
+  root 'top#index'
 
   resource :user, only: [:edit, :update] do
     resources :organizations, only: :index, controller: 'user_organizations'
