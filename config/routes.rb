@@ -31,6 +31,9 @@ Rails.application.routes.draw do
           patch :revoke
         end
       end
+      resources :actual do
+        resources :costs, only: [:new, :show, :create]
+      end
     end
   end
 
