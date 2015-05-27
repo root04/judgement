@@ -17,6 +17,30 @@
         = email_field_tag :email, flash[:email], class: 'new_member_email'
         = submit_tag '追加', class: 'btn btn-default'
 
+- if !@project.actual.nil?
+  - @project.actual.costs.each do |cost|
+    = cost.order_date
+    = cost.description
+    = cost.name
+    = cost.category
+    = cost.cost
+    = cost.payee
+
+.floatbox
+  = @project.actual.costs.with_year_month(2015, 1).class.name
+
+= form_for [@organization, @project, @project.actual, @project.actual.costs.new] do |f|
+  .form-group
+    = f.label :name
+    = f.text_field :name, placeholder: '費用名称', class: 'form-control'
+    = f.label :description
+    = f.text_field :description, placeholder: '費用概要', class: 'form-control'
+    = f.label :cost
+    = f.text_field :cost, type: 'number', placeholder: '費用', class: 'form-control'
+    = f.label :order_date
+    = f.date_select :order_date, class: 'form-control'
+  = f.submit '作成', class: 'btn btn-default'
+
 %ul.list-group
   - @project.users.each do |member|
     %li.member.list-group-item
