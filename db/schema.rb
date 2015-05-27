@@ -11,7 +11,34 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150515073238) do
+ActiveRecord::Schema.define(version: 20150520045119) do
+
+  create_table "actuals", force: :cascade do |t|
+    t.text     "description"
+    t.datetime "date"
+    t.integer  "project_id"
+  end
+
+  add_index "actuals", ["project_id"], name: "index_actuals_on_project_id"
+
+  create_table "budgets", force: :cascade do |t|
+    t.string "branch_name"
+    t.string "version"
+    t.string "origin_branch"
+    t.string "origin_version"
+  end
+
+  create_table "costs", force: :cascade do |t|
+    t.string  "name"
+    t.string  "description"
+    t.date    "order_date"
+    t.string  "category"
+    t.integer "cost"
+    t.string  "payee"
+    t.integer "actual_id"
+  end
+
+  add_index "costs", ["actual_id"], name: "index_costs_on_actual_id"
 
   create_table "organizations", force: :cascade do |t|
     t.string   "name",        limit: 255, null: false
@@ -29,6 +56,15 @@ ActiveRecord::Schema.define(version: 20150515073238) do
   end
 
   add_index "projects", ["organization_id"], name: "index_projects_on_organization_id"
+
+  create_table "sales", force: :cascade do |t|
+    t.string  "name"
+    t.string  "description"
+    t.date    "sales_date"
+    t.string  "category"
+    t.integer "sales"
+    t.string  "client"
+  end
 
   create_table "user_organizations", force: :cascade do |t|
     t.integer  "user_id",                         null: false
