@@ -1,0 +1,17 @@
+%h3 新規費用登録
+- if @errors
+  %ul
+    - @errors.each do |error|
+      %li.error= error
+
+= form_for [@project.organization, @project, @cost] do |f|
+  .form-group
+    = f.label :name
+    = f.text_field :name, placeholder: '費用名称', class: 'form-control'
+    = f.label :description
+    = f.text_field :description, placeholder: '費用概要', class: 'form-control'
+    = f.label :order_date
+    = f.date_select :order_date
+    = f.label :cost
+    = f.text_field :cost, type: 'number', class: 'form-control'
+  = f.submit '作成', class: 'btn btn-default'

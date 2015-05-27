@@ -1,0 +1,18 @@
+%h2.cost_name= @cost.name
+- if flash[:message]
+  .alert.alert-dismissable.alert-success
+    = flash[:message]
+- if flash[:error]
+  .alert.alert-dismissable.alert-danger
+    = flash[:error]
+
+%p= @organization.description
+
+%ul.list-group
+  %li.organization Description
+  %li.organization= @organization.description
+
+- if current_user.member_of?(@organization)
+  .dashboard
+    = link_to "Dashboard", dashboard_organization_path(@organization)
+
