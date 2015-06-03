@@ -9,7 +9,6 @@ class CostsController < ApplicationController
   def create
     @cost = @project.actual.costs.new(cost_params)
 
-    binding.pry
     unless @cost.save
       flash[:errors] = @cost.errors.full_messages
     end
