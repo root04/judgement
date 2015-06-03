@@ -15,4 +15,5 @@
  *= require adminlte/bootstrap/css/bootstrap
  *= require adminlte/dist/css/AdminLTE.min
  *= require adminlte/dist/css/skins/skin-blue.min
+ *= require bootstrap-datepicker
  */
