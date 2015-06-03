@@ -1,3 +1,15 @@
-.floatbox {
+.cost_list {
+  margin-top: 20px;
+  overflow: hidden;
+}
+
+.left {
   float: left;
+}
+
+.default_text_box {
+  padding-top: 2px;
+  padding-bottom: 2px;
+  padding-left: 10px;
+  padding-right: 10px;
 }
