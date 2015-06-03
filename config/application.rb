@@ -8,6 +8,7 @@ module Oniwa
   class Application < Rails::Application
     config.time_zone = 'Tokyo'
     config.active_record.default_timezone = :local
+    config.assets.paths << Rails.root.join('vendor', 'assets', 'bower_components')
 
     config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     config.i18n.default_locale = :ja
