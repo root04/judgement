@@ -12,5 +12,6 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require turbolinks
+//= require adminlte/bootstrap/js/bootstrap
+//= require adminlte/dist/js/app.min
 //= require_tree .
