@@ -39,6 +39,7 @@ GEM
     addressable (2.3.7)
     arel (6.0.0)
     bcrypt (3.1.10)
+    bower-rails (0.9.2)
     builder (3.2.2)
     byebug (3.5.1)
       columnize (~> 0.8)
@@ -252,6 +253,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  bower-rails
   capybara
   capybara-webkit
   coffee-rails (~> 4.1.0)
