@@ -12,6 +12,10 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require default
 //= require adminlte/bootstrap/js/bootstrap
 //= require adminlte/dist/js/app.min
-//= require_tree .
+//= require adminlte/plugins/flot/jquery.flot.js
+//= require adminlte/plugins/chartjs/Chart.js
+//= require bootstrap-datepicker/core
+//= require bootstrap-datepicker/locales/bootstrap-datepicker.ja
