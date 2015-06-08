@@ -17,22 +17,54 @@
         = email_field_tag :email, flash[:email], class: 'new_member_email'
         = submit_tag '追加', class: 'btn btn-default'
 
-%ul.list-group
-  - @project.users.each do |member|
-    %li.member.list-group-item
-      .list_member
-        .list_member_name.pull-left
-          = member.name
-        - if current_user.configurable?(@project) && current_user != member
-          .remove_member_btn_wrapper.pull-left
-            = form_tag organization_project_member_path(@organization, @project, member), class: 'member_remove_form', method: :delete do
-              = submit_tag '削除', class: 'remove_member_btn btn btn-default btn-sm', data: { confirm: '本当に削除しますか？' }
-          - if member.configurable?(@project)
-            .revoke_admin_btn_wrapper.pull-left
-              = form_tag revoke_organization_project_member_path(@organization, @project, member), class: 'member_admin_form', method: :patch do
-                = submit_tag '管理者剥奪', class: 'revoke_admin_btn btn btn-default btn-sm', data: { confirm: '管理者権限を剥奪しますか？' }
-          - else
-            .grant_admin_btn_wrapper.pull-left
-              = form_tag organization_project_member_path(@organization, @project, member), class: 'member_admin_form', method: :patch do
-                = submit_tag '管理者付与', class: 'grant_admin_btn btn btn-default btn-sm', data: { confirm: '管理者権限を付与しますか？' }
+= form_for [@organization, @project, @project.actual, @project.actual.costs.new] do |f|
+  .form-group
+    = f.label :name
+    = f.text_field :name, placeholder: '費用名称', class: 'cost_name'
+    = f.label :description
+    = f.text_field :description, placeholder: '費用概要', class: 'cost_description'
+    = f.label :cost
+    = f.text_field :cost, type: 'number', placeholder: '費用', class: 'cost'
+    = f.label :order_date
+    = f.text_field :order_date, class: 'order_date date-picker'
+  = f.submit '作成', class: 'btn btn-default'
 
+- if !@project.actual.nil?
+  .cost_lists
+    - @project.actual.costs.each do |cost|
+      .cost_list
+        .cost_name.left.default_text_box
+          = cost.name
+        .cost_description.left.default_text_box
+          = cost.description
+        .cost_cost.left.default_text_box
+          = cost.cost
+        .cost_category.left.default_text_box
+          = cost.category
+        .cost_payee.left.default_text_box
+          = cost.payee
+        .cost_order_date.left.default_text_box
+          = cost.order_date
+
+.team_members
+  %ul.list-group
+    - @project.users.each do |member|
+      %li.member.list-group-item
+        .list_member
+          .list_member_name.pull-left
+            = member.name
+          - if current_user.configurable?(@project) && current_user != member
+            .remove_member_btn_wrapper.pull-left
+              = form_tag organization_project_member_path(@organization, @project, member), class: 'member_remove_form', method: :delete do
+                = submit_tag '削除', class: 'remove_member_btn btn btn-default btn-sm', data: { confirm: '本当に削除しますか？' }
+            - if member.configurable?(@project)
+              .revoke_admin_btn_wrapper.pull-left
+                = form_tag revoke_organization_project_member_path(@organization, @project, member), class: 'member_admin_form', method: :patch do
+                  = submit_tag '管理者剥奪', class: 'revoke_admin_btn btn btn-default btn-sm', data: { confirm: '管理者権限を剥奪しますか？' }
+            - else
+              .grant_admin_btn_wrapper.pull-left
+                = form_tag organization_project_member_path(@organization, @project, member), class: 'member_admin_form', method: :patch do
+                  = submit_tag '管理者付与', class: 'grant_admin_btn btn btn-default btn-sm', data: { confirm: '管理者権限を付与しますか？' }
+
+- content_for(:javascript) do
+  = javascript_include_tag 'project'
