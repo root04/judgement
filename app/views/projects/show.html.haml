@@ -46,6 +46,25 @@
         .cost_order_date.left.default_text_box
           = cost.order_date
 
+%hr
+
+- if !@project.actual.nil?
+  .cost_lists
+    - @project.actual.term_cost(Date.today - 180, Date.today).each do |cost|
+      .cost_list
+        .cost_name.left.default_text_box
+          = cost.name
+        .cost_description.left.default_text_box
+          = cost.description
+        .cost_cost.left.default_text_box
+          = cost.cost
+        .cost_category.left.default_text_box
+          = cost.category
+        .cost_payee.left.default_text_box
+          = cost.payee
+        .cost_order_date.left.default_text_box
+          = cost.order_date
+
 .team_members
   %ul.list-group
     - @project.users.each do |member|
@@ -65,6 +84,49 @@
               .grant_admin_btn_wrapper.pull-left
                 = form_tag organization_project_member_path(@organization, @project, member), class: 'member_admin_form', method: :patch do
                   = submit_tag '管理者付与', class: 'grant_admin_btn btn btn-default btn-sm', data: { confirm: '管理者権限を付与しますか？' }
+
+#flot-placeholder{:style => "width:300px; height: 200px"}
+
+:javascript
+  $(function() {
+      var d1 = [];
+      for (var i = 0; i < 14; i += 0.5) {
+          d1.push([i, Math.sin(i)]);
+      }
+      var d2 = [[0, 3], [4, 8], [8, 5], [9, 13]];
+      // A null signifies separate line segments
+      var d3 = [[0, 12], [7, 12], null, [7, 2.5], [12, 2.5]];
+      $.plot("#flot-placeholder", [ d1, d2, d3 ]);
+  });
+
+%canvas#sample{:height => "500", :width => "500"}
+
+:javascript
+  var doughnutData = [
+  　　{
+  　　　value: 30,
+  　　　color:"#aaf2fb"
+  　　},
+  　　{
+  　　　value: 50,
+  　　　color: "#ffb6b9"
+  　　},
+  　　{
+  　　　value: 120,
+  　　　color: "#ffe361"
+  　　},
+     {
+  　　　value: 170,
+  　　　color: "#fbaa6e"
+  　　},
+     {
+  　　　value: 70,
+  　　　color: "#A8BECB"
+  　　}
+  ];
+
+  var myDoughnut = new Chart(document.getElementById("sample").
+  getContext("2d")).Doughnut(doughnutData);
 
 - content_for(:javascript) do
   = javascript_include_tag 'project'
