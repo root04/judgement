@@ -33,7 +33,10 @@ class User < ActiveRecord::Base
       organization_id: arg[:organization].id,
       user_projects_attributes: [
         { user: self, admin: true }
-      ]
+      ],
+      actual_attributes: {
+        costs_attributes: {}
+      }
     )
   end
 
