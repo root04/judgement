@@ -29,28 +29,22 @@
     = f.text_field :order_date, class: 'order_date date-picker'
   = f.submit '作成', class: 'btn btn-default'
 
-- if !@project.actual.nil?
-  .cost_lists
-    - @project.actual.costs.each do |cost|
-      .cost_list
-        .cost_name.left.default_text_box
-          = cost.name
-        .cost_description.left.default_text_box
-          = cost.description
-        .cost_cost.left.default_text_box
-          = cost.cost
-        .cost_category.left.default_text_box
-          = cost.category
-        .cost_payee.left.default_text_box
-          = cost.payee
-        .cost_order_date.left.default_text_box
-          = cost.order_date
-
-%hr
+= form_tag organization_project_path(@organization, @project), class: 'aggregation_term_form', method: :get do
+  .aggregation_term
+    .start.left
+      .start_label.left
+        From
+      .start_day.left
+        %input{type: :text, class: 'date-picker',name: :startday, value: @startday}
+      .end_label.left
+        To
+      .end_day.left
+        %input{type: :text, class: 'date-picker',name: :endday, value: @endday}
+    = submit_tag 'Apply', class: 'aggregation_term_btn btn btn-default btn-sm'
 
 - if !@project.actual.nil?
   .cost_lists
-    - @project.actual.term_cost(Date.today - 180, Date.today).each do |cost|
+    - @costs.each do |cost|
       .cost_list
         .cost_name.left.default_text_box
           = cost.name
