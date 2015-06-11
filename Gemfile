@@ -18,6 +18,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'kaminari'
 gem 'bootstrap-datepicker-rails'
+gem 'gon'
 
 group :development do
   gem 'erb2haml'
