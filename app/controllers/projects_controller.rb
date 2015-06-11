@@ -1,13 +1,14 @@
 class ProjectsController < ApplicationController
   before_action :require_belonging_organization
+  before_action :detect_project, only: [:show]
   before_action :detect_aggregation_term, only: [:show]
+  before_action :aggregation_term_data, only: [:show]
 
   def new
     @project = Project.new
   end
 
   def show
-    @project = @organization.projects.find(params[:id])
     @costs = @project.actual.costs.term_cost(@startday, @endday)
 
     unless current_user.member_of?(@project)
@@ -34,6 +35,10 @@ class ProjectsController < ApplicationController
     @organization = current_user.organizations.find(params[:organization_id])
   end
 
+  def detect_project
+    @project = @organization.projects.find(params[:id])
+  end
+
   def detect_aggregation_term
     if params[:endday]
       @endday = Time.parse(params[:endday])
@@ -50,5 +55,17 @@ class ProjectsController < ApplicationController
     if @startday > @endday
       @startday = @endday
     end
+      @startday = @startday.to_date
+      @endday   = @endday.to_date
+  end
+
+  def aggregation_term_data
+    @costs_term = {}
+    @term_month = (@startday..@endday).select {|d| d.day == 1}
+    @term_month.each do |month|
+      cost = @project.actual.costs.term_cost(month, month.end_of_month).pluck(:cost).sum()
+      @costs_term[month.to_s] = cost
+    end
+    gon.costs = @costs_term.to_json
   end
 end
