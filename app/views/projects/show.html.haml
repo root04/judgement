@@ -25,6 +25,8 @@
     = f.text_field :description, placeholder: '費用概要', class: 'cost_description'
     = f.label :cost
     = f.text_field :cost, type: 'number', placeholder: '費用', class: 'cost'
+    = f.label :category
+    = f.text_field :category, placeholder: '費用分類', class: 'cost_category'
     = f.label :order_date
     = f.text_field :order_date, class: 'order_date date-picker'
   = f.submit '作成', class: 'btn btn-default'
