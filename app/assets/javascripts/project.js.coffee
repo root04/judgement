@@ -21,5 +21,5 @@ $ ->
       }
     ]
   };
-  ctx = document.getElementById("sample").getContext("2d")
+  ctx = document.getElementById("cost_graph_canvas").getContext("2d")
   graph = new Chart(ctx).Bar(data)

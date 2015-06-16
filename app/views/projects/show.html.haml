@@ -32,32 +32,66 @@
 = form_tag organization_project_path(@organization, @project), class: 'aggregation_term_form', method: :get do
   .aggregation_term
     .start.left
-      .start_label.left
+      .start_label.left.margin-right10
         From
-      .start_day.left
+      .start_day.left.margin-right10
         %input{type: :text, class: 'date-picker',name: :startday, value: @startday}
-      .end_label.left
+      .end_label.left.margin-right10
         To
-      .end_day.left
+      .end_day.left.margin-right10
         %input{type: :text, class: 'date-picker',name: :endday, value: @endday}
     = submit_tag 'Apply', class: 'aggregation_term_btn btn btn-default btn-sm'
 
-- if !@project.actual.nil?
-  .cost_lists
+.cost_graph
+  %canvas#cost_graph_canvas{ :width =>'800', :height => '300'}
+
+.cost_lists
+  .cost_list_header
+    .cost_name.left.default_text_box
+      費用名称
+    .cost_description.left.default_text_box
+      費用概要
+    .cost_cost.left.default_text_box
+      費用
+    .cost_category.left.default_text_box
+      分類
+    .cost_payee.left.default_text_box
+      支払先
+    .cost_order_date.left.default_text_box
+      発注日
+  - if !@project.actual.nil?
     - @costs.each do |cost|
       .cost_list
         .cost_name.left.default_text_box
-          = cost.name
+          - if cost.name
+            = cost.name
+          - else
+            未設定
         .cost_description.left.default_text_box
-          = cost.description
+          - if cost.description
+            = cost.description
+          - else
+            未設定
         .cost_cost.left.default_text_box
-          = cost.cost
+          - if cost.cost
+            = cost.cost
+          - else
+            未設定
         .cost_category.left.default_text_box
-          = cost.category
+          - if cost.category
+            = cost.category
+          - else
+            未設定
         .cost_payee.left.default_text_box
-          = cost.payee
+          - if cost.payee
+            = cost.payee
+          - else
+            未設定
         .cost_order_date.left.default_text_box
-          = cost.order_date
+          - if cost.order_date
+            = cost.order_date
+          - else
+            未設定
 
 .team_members
   %ul.list-group
@@ -79,7 +113,6 @@
                 = form_tag organization_project_member_path(@organization, @project, member), class: 'member_admin_form', method: :patch do
                   = submit_tag '管理者付与', class: 'grant_admin_btn btn btn-default btn-sm', data: { confirm: '管理者権限を付与しますか？' }
 
-%canvas#sample{:height => "500", :width => "500"}
 
 - content_for(:javascript) do
-  = javascript_include_tag 'interaction'
+  = javascript_include_tag 'project'
