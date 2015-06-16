@@ -9,7 +9,7 @@ class ProjectsController < ApplicationController
   end
 
   def show
-    @costs = @project.actual.costs.term_cost(@startday, @endday)
+    @costs = @project.actual.costs.term_cost(@startday, @endday).order('order_date')
 
     unless current_user.member_of?(@project)
       raise Oniwa::Forbidden
