@@ -17,5 +17,6 @@
 //= require adminlte/dist/js/app.min
 //= require adminlte/plugins/flot/jquery.flot.js
 //= require adminlte/plugins/chartjs/Chart.js
+//= require adminlte/plugins/Chart.StackedBar.js/src/Chart.StackedBar.js
 //= require bootstrap-datepicker/core
 //= require bootstrap-datepicker/locales/bootstrap-datepicker.ja
