@@ -1,25 +1,21 @@
 $ ->
   costs = $.parseJSON(gon.costs)
-  graphData = []
   xaxis = []
-  console.log costs
-  $.each(costs, (k, v) ->
-    xaxis.push k
-    graphData.push v
+  graphdatasets = []
+
+  $.each(costs, (category, data) ->
+    graphdata = []
+    graphdata.label         = category
+    graphdata.fillColor     = "rgba(220,220,220,0.5)"
+    graphdata.strokeColor   = "rgba(220,220,220,0.8)"
+    graphdata.highlightFill = "rgba(220,220,220,0.75)"
+    graphdata.data          = data
+    graphdatasets.push graphdata
   )
 
   data = {
-    labels: xaxis,
-    datasets: [
-      {
-        label: "My First dataset",
-        fillColor: "rgba(220,220,220,0.5)",
-        strokeColor: "rgba(220,220,220,0.8)",
-        highlightFill: "rgba(220,220,220,0.75)",
-        highlightStroke: "rgba(220,220,220,1)",
-        data: graphData
-      }
-    ]
+    labels: gon.months,
+    datasets: graphdatasets
   };
   ctx = document.getElementById("cost_graph_canvas").getContext("2d")
-  graph = new Chart(ctx).Bar(data)
+  graph = new Chart(ctx).StackedBar(data)

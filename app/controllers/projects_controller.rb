@@ -62,10 +62,18 @@ class ProjectsController < ApplicationController
   def aggregation_term_data
     @costs_term = {}
     @term_month = (@startday..@endday).select {|d| d.day == 1}
-    @term_month.each do |month|
-      cost = @project.actual.costs.term_cost(month, month.end_of_month).pluck(:cost).sum()
-      @costs_term[month.to_s] = cost
+    categories = @project.actual.costs.term_categories(@term_month.min, @term_month.max.end_of_month)
+    if @project.actual.costs.exists?
+      categories.each do |category|
+        term_cost = []
+        @term_month.each do |month|
+          term_category_cost = @project.actual.costs.term_category_cost(month, month.end_of_month, category)
+          term_cost.push(term_category_cost)
+        end
+        @costs_term[category.to_s] = term_cost
+      end
     end
     gon.costs = @costs_term.to_json
+    gon.months = @term_month
   end
 end
