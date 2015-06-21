@@ -32,6 +32,7 @@ $ ->
     labels: gon.months,
     datasets: graphdatasets
   };
+  Chart.defaults.global.multiTooltipTemplate = "<%if (datasetLabel){%><%=datasetLabel%>: <%}%><%= value %>"
   ctx = document.getElementById("cost_graph_canvas").getContext("2d")
   graph = new Chart(ctx).StackedBar(data, {
     barStrokeWidth: 1
