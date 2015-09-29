@@ -1,16 +1,10 @@
 class Cost < ActiveRecord::Base
-  belongs_to :date
-  belongs_to :actual
+  has_many :cost_details
+  belongs_to :profit_loss
 
-  scope :term_cost, ->(start, endday) {
-    where(order_date: Date.new(start.year, start.month, start.day)..Date.new(endday.year, endday.month, endday.day))
-  }
+  accepts_nested_attributes_for :cost_details
 
-  scope :term_category_cost, ->(start, endday, category) {
-    where(order_date: Date.new(start.year, start.month, start.day)..Date.new(endday.year, endday.month, endday.day)).where(category: category).sum(:cost)
-  }
-
-  scope :term_categories, ->(start, endday) {
-    where(order_date: Date.new(start.year, start.month, start.day)..Date.new(endday.year, endday.month, endday.day)).pluck(:category)
-  }
+  def term_cost(startday, endday)
+    cost_details.term_cost(startday, endday)
+  end
 end
