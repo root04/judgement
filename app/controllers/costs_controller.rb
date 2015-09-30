@@ -1,6 +1,11 @@
 class CostsController < ApplicationController
   before_action :detect_organization
   before_action :detect_project
+  before_action :detect_profit_loss
+  before_action :detect_cost
+
+  def show
+  end
 
   def create
     @cost = @project.actual.costs.new(cost_params)
@@ -14,7 +19,15 @@ class CostsController < ApplicationController
   private
 
   def cost_params
-    params.require(:cost).permit(:name, :description, :order_date, :category, :cost, :payee)
+    params.require(:cost).permit(:description)
+  end
+
+  def detect_profit_loss
+    @cost = Cost.find(params[:id])
+  end
+
+  def detect_profit_loss
+    @profit_loss = ProfitLoss.find(params[:profit_loss_id])
   end
 
   def detect_project
