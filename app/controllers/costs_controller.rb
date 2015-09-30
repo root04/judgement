@@ -4,6 +4,9 @@ class CostsController < ApplicationController
   before_action :detect_profit_loss
   before_action :detect_cost
 
+  def index
+  end
+
   def show
   end
 
