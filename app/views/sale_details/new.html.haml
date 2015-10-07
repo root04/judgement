@@ -1,0 +1,21 @@
+%h3 新規売上登録
+
+= render 'templates/show_messages'
+
+.name= @project.name
+.description= @sale.description
+
+- if current_user.configurable?(@project)
+  = form_for [@profit_loss, @sale, @sale_detail] do |f|
+    .form-group
+      = f.label :name
+      = f.text_field :name, placeholder: '売上名称', class: 'sale_name'
+      = f.label :description
+      = f.text_field :description, placeholder: '売上概要', class: 'sale_description'
+      = f.label :sale_value
+      = f.number_field :sale_value, type: 'number', placeholder: '売上', class: 'sale'
+      = f.label :category
+      = f.text_field :category, placeholder: '売上分類', class: 'sale_category'
+      = f.label :ordered_date
+      = f.text_field :ordered_date, class: 'ordered_date date-picker'
+    = f.submit '作成', class: 'btn btn-default'

@@ -1,0 +1,11 @@
+%h3 新規PL作成
+
+= render 'templates/show_messages'
+
+= form_for [@profit_loss] do |f|
+  = f.label :description
+  = f.text_field :description
+  = f.label :project_id
+  = f.select :project_id, current_user.projects.map {|project| [project.name, project.id]}
+
+  = f.submit '作成'

@@ -4,13 +4,13 @@ class Project < ActiveRecord::Base
   has_many :user_projects
   has_many :users, through: :user_projects
 
-  has_one :actual
+  has_many :profit_losses
 
   validates :name, presence: true
   validates :organization_id, presence: true
 
   accepts_nested_attributes_for :user_projects
-  accepts_nested_attributes_for :actual
+  accepts_nested_attributes_for :profit_losses
 
   def dismiss_member(user)
     user_projects.member(user).each(&:destroy)

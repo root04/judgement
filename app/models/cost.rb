@@ -1,8 +1,9 @@
 class Cost < ActiveRecord::Base
   has_many :cost_details
-  belongs_to :profit_loss
+  has_many :profit_losses
+  has_many :sales, through: :profit_losses
 
-  accepts_nested_attributes_for :cost_details
+  accepts_nested_attributes_for :profit_losses
 
   def term_cost(startday, endday)
     cost_details.term_cost(startday, endday)

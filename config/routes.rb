@@ -38,6 +38,10 @@ Rails.application.routes.draw do
     resources :costs, only: %i(new create index show) do
       resources :cost_details, only: %i(new create show)
     end
+
+    resources :sales, only: %i(new create index show) do
+      resources :sale_details, only: %i(new create show)
+    end
   end
 
 end

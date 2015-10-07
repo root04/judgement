@@ -6,4 +6,4 @@
   %ul.list-group
     - @costs do |cost|
       %li
-        = cost.description
+        = link_to cost.description, profit_loss_cost_path(cost.profit_loss, cost)

@@ -1,8 +1,22 @@
 class CostsController < ApplicationController
-  before_action :detect_organization
-  before_action :detect_project
   before_action :detect_profit_loss
-  before_action :detect_cost
+  before_action :detect_cost, only: %i(show)
+
+  def new
+    @cost = Cost.new
+  end
+
+  def create
+    Cost.transaction do
+      @cost = Cost.create!(cost_params)
+      @profit_loss.update_attributes!(cost: @cost)
+    end
+      flash[:message] = 'successfully created cost'
+      redirect_to profit_loss_cost_path(@profit_loss, @cost)
+    rescue => e
+      flash[:errors] = @cost.errors.full_messages
+      render :new
+  end
 
   def index
   end
@@ -10,22 +24,13 @@ class CostsController < ApplicationController
   def show
   end
 
-  def create
-    @cost = @project.actual.costs.new(cost_params)
-
-    unless @cost.save
-      flash[:errors] = @cost.errors.full_messages
-    end
-    redirect_to organization_project_path(@organization, @project)
-  end
-
   private
 
   def cost_params
-    params.require(:cost).permit(:description)
+    params.require(:cost).permit(:description, :sales)
   end
 
-  def detect_profit_loss
+  def detect_cost
     @cost = Cost.find(params[:id])
   end
 

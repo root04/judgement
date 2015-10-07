@@ -2,4 +2,31 @@
 
 = render 'templates/show_messages'
 
-.description= @cost.description
+.description.m-bottom-20= @cost.description
+
+= link_to '費用詳細追加', new_profit_loss_cost_cost_detail_path(@profit_loss, @cost), class: 'btn btn-success m-bottom-20'
+
+%ul.list-group
+  %lh.cost_detail-header.list-group-item
+    .cost_detail-header-elem.left
+      費用名称
+    .cost_detail-header-elem.left
+      費用概要
+    .cost_detail-header-elem.left
+      費用額
+    .cost_detail-header-elem.left
+      費用カテゴリ
+    .cost_detail-header-elem.left
+      費用発注日
+  - @cost.cost_details.each do |cost_detail|
+    %li.cost_detail-list.list-group-item
+      .cost_detail-name.left
+        = cost_detail.name
+      .cost_detail-description.left
+        = cost_detail.description
+      .cost_detail-value.left
+        = cost_detail.cost_value
+      .cost_detail-category.left
+        = cost_detail.category
+      .cost_detail-order_date.left
+        = cost_detail.order_date

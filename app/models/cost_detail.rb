@@ -1,6 +1,8 @@
 class CostDetail < ActiveRecord::Base
   belongs_to :date
-  belongs_to :profit_losses
+  belongs_to :cost
+
+  validates :name, :description, :order_date, :category, :cost, presence: true
 
   scope :term_cost, ->(start, endday) {
     where(order_date: Date.new(start.year, start.month, start.day)..Date.new(endday.year, endday.month, endday.day))

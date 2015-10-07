@@ -1,8 +1,8 @@
-%h3 新規 Cost 登録
+%h3 新規 Sales 登録
 
 = render 'templates/show_messages'
 
-= form_for [@profit_loss, @cost] do |f|
+= form_for [@profit_loss, @sale] do |f|
   .form-group
     = f.label :description
     = f.text_field :description, placeholder: 'Short description', class: 'form-control'

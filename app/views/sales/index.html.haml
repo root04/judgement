@@ -1,0 +1,9 @@
+%h3 SalesController#index
+
+= render 'templates/show_messages'
+
+.sales
+  %ul.list-group
+    - @sales do |sale|
+      %li
+        = link_to sale.description, profit_loss_sales_path(sale.profit_loss, sale)

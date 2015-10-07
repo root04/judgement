@@ -1,0 +1,28 @@
+%h3 PL 詳細画面
+
+= render 'templates/show_messages'
+
+.description.m-bottom-20= @profit_loss.description
+
+- if @profit_loss.sale
+  %ul.list-group.list-container
+    %lh.list-header.list-group-item
+      .list-header-elem.left
+        売上
+    %li.list-elem.list-group-item
+      .list-elem
+        = link_to @profit_loss.sale.description, profit_loss_sale_path(@profit_loss, @profit_loss.sale)
+
+- if @profit_loss.cost
+  %ul.list-group.list-container
+    %lh.list-header.list-group-item
+      .list-header-elem.left
+        費用
+    %li.list-elem.list-group-item
+      .list-elem
+        = link_to @profit_loss.cost.description, profit_loss_cost_path(@profit_loss, @profit_loss.cost)
+
+.new-cost.m-bottom-20
+  = link_to 'cost作成', new_profit_loss_cost_path(profit_loss_id: @profit_loss), class: 'btn btn-success'
+.new-sales
+  = link_to 'sales作成', new_profit_loss_sale_path(profit_loss_id: @profit_loss), class: 'btn btn-success'
