@@ -1,0 +1,9 @@
+%h3 新規 Cost 登録
+
+= render 'templates/show_messages'
+
+= form_for [@profit_loss, @cost] do |f|
+  .form-group
+    = f.label :description
+    = f.text_field :description, placeholder: 'Short description', class: 'form-control'
+  = f.submit '作成', class: 'btn btn-default'

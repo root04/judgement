@@ -11,27 +11,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150608031937) do
+ActiveRecord::Schema.define(version: 20151006024546) do
 
-  create_table "actuals", force: :cascade do |t|
-    t.text     "description"
-    t.datetime "date"
-    t.integer  "project_id"
-  end
-
-  add_index "actuals", ["project_id"], name: "index_actuals_on_project_id"
-
-  create_table "costs", force: :cascade do |t|
+  create_table "cost_details", force: :cascade do |t|
     t.string  "name"
     t.string  "description"
     t.date    "order_date"
     t.string  "category"
-    t.integer "cost"
+    t.integer "cost_value"
     t.string  "payee"
-    t.integer "actual_id"
+    t.integer "cost_id"
   end
 
-  add_index "costs", ["actual_id"], name: "index_costs_on_actual_id"
+  add_index "cost_details", ["cost_id"], name: "index_cost_details_on_cost_id"
+
+  create_table "costs", force: :cascade do |t|
+    t.text "description"
+  end
 
   create_table "organizations", force: :cascade do |t|
     t.string   "name",        limit: 255, null: false
@@ -41,6 +37,19 @@ ActiveRecord::Schema.define(version: 20150608031937) do
     t.datetime "deleted_at"
   end
 
+  create_table "profit_losses", force: :cascade do |t|
+    t.integer "project_id",               null: false
+    t.integer "sale_id"
+    t.integer "cost_id"
+    t.string  "description", default: "", null: false
+  end
+
+  add_index "profit_losses", ["cost_id", "sale_id"], name: "index_profit_losses_on_cost_id_and_sale_id"
+  add_index "profit_losses", ["cost_id"], name: "index_profit_losses_on_cost_id"
+  add_index "profit_losses", ["project_id"], name: "index_profit_losses_on_project_id"
+  add_index "profit_losses", ["sale_id", "cost_id"], name: "index_profit_losses_on_sale_id_and_cost_id"
+  add_index "profit_losses", ["sale_id"], name: "index_profit_losses_on_sale_id"
+
   create_table "projects", force: :cascade do |t|
     t.string   "name",            null: false
     t.integer  "organization_id", null: false
@@ -49,6 +58,23 @@ ActiveRecord::Schema.define(version: 20150608031937) do
   end
 
   add_index "projects", ["organization_id"], name: "index_projects_on_organization_id"
+
+  create_table "sale_details", force: :cascade do |t|
+    t.string  "name"
+    t.string  "description"
+    t.date    "ordered_date"
+    t.date    "book_date"
+    t.string  "category"
+    t.integer "sale_value"
+    t.string  "client"
+    t.integer "sale_id"
+  end
+
+  add_index "sale_details", ["sale_id"], name: "index_sale_details_on_sale_id"
+
+  create_table "sales", force: :cascade do |t|
+    t.text "description"
+  end
 
   create_table "user_organizations", force: :cascade do |t|
     t.integer  "user_id",                         null: false

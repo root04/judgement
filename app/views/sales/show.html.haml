@@ -1,0 +1,32 @@
+%h3 Sales 詳細画面
+
+= render 'templates/show_messages'
+
+.description.m-bottom-20= @sale.description
+
+= link_to '費用詳細追加', new_profit_loss_sale_sale_detail_path(@profit_loss, @sale), class: 'btn btn-success m-bottom-20'
+
+%ul.list-group
+  %lh.sale_detail-header.list-group-item
+    .sale_detail-header-elem.left
+      費用名称
+    .sale_detail-header-elem.left
+      費用概要
+    .sale_detail-header-elem.left
+      費用額
+    .sale_detail-header-elem.left
+      費用カテゴリ
+    .sale_detail-header-elem.left
+      費用発注日
+  - @sale.sale_details.each do |sale_detail|
+    %li.sale_detail-list.list-group-item
+      .sale_detail-name.left
+        = sale_detail.name
+      .sale_detail-description.left
+        = sale_detail.description
+      .sale_detail-value.left
+        = sale_detail.sale_value
+      .sale_detail-category.left
+        = sale_detail.category
+      .sale_detail-ordered_date.left
+        = sale_detail.ordered_date

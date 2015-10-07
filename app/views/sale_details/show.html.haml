@@ -1,0 +1,54 @@
+%h1 費用詳細
+
+= render 'templates/show_messages'
+
+.name= @cost_details.name
+
+.cost_lists
+  .cost_list_header
+    .cost_name.left.default_text_box
+      費用名称
+    .cost_description.left.default_text_box
+      費用概要
+    .cost_cost.left.default_text_box
+      費用
+    .cost_category.left.default_text_box
+      分類
+    .cost_payee.left.default_text_box
+      支払先
+    .cost_order_date.left.default_text_box
+      発注日
+    .cost_list
+      .cost_name.left.default_text_box
+        - if @cost_details.name
+          = @cost_details.name
+        - else
+          未設定
+      .cost_description.left.default_text_box
+        - if @cost_details.description
+          = @cost_details.description
+        - else
+          未設定
+      .cost_cost.left.default_text_box
+        - if @cost_details.cost
+          = @cost_details.cost
+        - else
+          未設定
+      .cost_category.left.default_text_box
+        - if @cost_details.category
+          = @cost_details.category
+        - else
+          未設定
+      .cost_payee.left.default_text_box
+        - if @cost_details.payee
+          = @cost_details.payee
+        - else
+          未設定
+      .cost_order_date.left.default_text_box
+        - if @cost_details.order_date
+          = @cost_details.order_date
+        - else
+          未設定
+
+- content_for(:javascript) do
+  = javascript_include_tag 'project'

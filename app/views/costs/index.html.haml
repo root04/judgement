@@ -1,0 +1,9 @@
+%h3 CostsController#index
+
+= render 'templates/show_messages'
+
+.costs
+  %ul.list-group
+    - @costs do |cost|
+      %li
+        = link_to cost.description, profit_loss_cost_path(cost.profit_loss, cost)

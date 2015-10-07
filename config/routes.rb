@@ -31,9 +31,16 @@ Rails.application.routes.draw do
           patch :revoke
         end
       end
-      resources :actual do
-        resources :costs, only: [:create]
-      end
+    end
+  end
+
+  resources :profit_losses do
+    resources :costs, only: %i(new create index show) do
+      resources :cost_details, only: %i(new create show)
+    end
+
+    resources :sales, only: %i(new create index show) do
+      resources :sale_details, only: %i(new create show)
     end
   end
 
